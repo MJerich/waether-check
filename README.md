@@ -1,1 +1,1 @@
-# waether-check
+# weather-check
