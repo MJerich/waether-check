@@ -1,6 +1,39 @@
+body {
+    margin: 20px;
+}
+
 header {
     display: flex;
     justify-content: center;
     background: linear-gradient(to right, #3366cc 0%, #000066 100%);
     color: white;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.current-style {
+    border: black 2px solid;
+    margin: 8px 0;
+    padding: 10px;
+}
+
+.btn {
+    margin: 8px 0;
+}
+
+#date {
+    font-size: 20px;
+}
+
+#five-day-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+#card-one, #card-two, #card-three, #card-four, #card-five {
+    color: white;
+    margin: 0 1px;
 }
