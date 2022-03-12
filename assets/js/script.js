@@ -1,4 +1,4 @@
-const apiKey = "54dce16c85b0f21dbfc4635fc26c5282";
+const apiKey = "416d2abd98908efcd62ad65cc85ce55e";
 let userFormEl = $("#user-form");
 let citySearchEl = $('#city-search');
 let todaysWeatherEl = $('#todays-weather');
