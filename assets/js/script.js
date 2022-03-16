@@ -9,14 +9,28 @@ let cardThreeEl = $('#card-three');
 let cardFourEl = $('#card-four');
 let cardFiveEl = $('#card-five');
 let searchSectionEl = $('#search-section')
+let cityName = ''
 
 function searchHandler(event) {
     event.preventDefault();
-    updateWeather();
+    nameSearch();
 };
 
+function nameSearch() {
+    cityName = citySearchEl.val().toLowerCase().replace(/\s/g, '+');
+    updateWeather();
+}
+
+function nameHistory(event) {
+    let element = event.target
+    if (element.classList.value === 'btn btn-secondary col-12') {
+        let buttonName = element.getAttribute("id")
+        cityName = buttonName;
+        updateWeather();
+    }
+}
+
 function updateWeather() {
-    let cityName = citySearchEl.val().toLowerCase().replace(/\s/g, '+');
     let apiUrl = "https://api.openweathermap.org/data/2.5/weather?q="+cityName+"&units=imperial&appid="+apiKey;
 
     fetch(apiUrl)
@@ -25,6 +39,13 @@ function updateWeather() {
                 responce.json().then(function(data) {
                     console.log(data)
                     let displayName = data.name;
+                    // crate search history button
+                    if ($("#"+displayName).length) {
+                    } else {
+                        let historyButton = $('<button></button>', {type: 'button', class: 'btn btn-secondary col-12', id: displayName});
+                        historyButton.text(displayName);
+                        searchSectionEl.append(historyButton);
+                    }
                     // display first line of crrent weather (City Name, Date, and Weather Icon)
                     let weatherIconCode = data.weather[0].icon;
                     let weatherIconLink = "http://openweathermap.org/img/w/" + weatherIconCode + ".png";
@@ -201,4 +222,7 @@ function updateWeather() {
         });
 };
 
+// event for serch-submit
 $("#user-form").submit(searchHandler);
+// event for click on history
+document.addEventListener("click", nameHistory);
