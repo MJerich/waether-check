@@ -8,8 +8,29 @@ let cardTwoEl = $('#card-two');
 let cardThreeEl = $('#card-three');
 let cardFourEl = $('#card-four');
 let cardFiveEl = $('#card-five');
-let searchSectionEl = $('#search-section')
-let cityName = ''
+let searchSectionEl = $('#search-section');
+let cityName = '';
+let saveHistory = {};
+
+function loadHistory() {
+    saveHistory = localStorage.getItem("saveHistory");
+    saveHistory = JSON.parse(saveHistory)
+
+    if (!saveHistory) {
+        saveHistory = {};
+    } else {
+        for (key in saveHistory) {
+            let historyButton = $('<button></button>', {type: 'button', class: 'btn btn-secondary col-12', id: saveHistory[key]});
+            historyButton.text(saveHistory[key]);
+            console.log()
+            searchSectionEl.append(historyButton);
+        }
+    }
+};
+
+function savedHistory() {
+    localStorage.setItem("saveHistory", JSON.stringify(saveHistory))
+}
 
 function searchHandler(event) {
     event.preventDefault();
@@ -45,6 +66,9 @@ function updateWeather() {
                         let historyButton = $('<button></button>', {type: 'button', class: 'btn btn-secondary col-12', id: displayName});
                         historyButton.text(displayName);
                         searchSectionEl.append(historyButton);
+                        console.log(saveHistory)
+                        saveHistory[displayName] = displayName;
+                        savedHistory();
                     }
                     // display first line of crrent weather (City Name, Date, and Weather Icon)
                     let weatherIconCode = data.weather[0].icon;
@@ -222,6 +246,7 @@ function updateWeather() {
         });
 };
 
+loadHistory();
 // event for serch-submit
 $("#user-form").submit(searchHandler);
 // event for click on history
